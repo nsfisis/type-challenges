@@ -22,7 +22,8 @@
 
 /* _____________ Your Code Here _____________ */
 
-type MyAwaited<T> = any
+type MyAwaitedRec<T> = T extends { then: (onfulfilled: (arg: infer R) => any) => any } ? MyAwaitedRec<R> : T;
+type MyAwaited<T extends { then: (onfulfilled: (arg: any) => any) => any }> = MyAwaitedRec<T>;
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
