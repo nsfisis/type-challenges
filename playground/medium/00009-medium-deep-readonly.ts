@@ -36,7 +36,10 @@
 
 /* _____________ Your Code Here _____________ */
 
-type DeepReadonly<T> = any
+type DeepReadonly<T> =
+  T extends (...args: any[]) => any ? T :
+  T extends {}                      ? { readonly [P in keyof T]: DeepReadonly<T[P]> } :
+                                      T;
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
