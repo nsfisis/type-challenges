@@ -39,9 +39,9 @@
 
 /* _____________ Your Code Here _____________ */
 
-type Chainable = {
-  option(key: string, value: any): any
-  get(): any
+type Chainable<T = {}> = {
+  option<K extends keyof any, V>(key: K, value: V): Chainable<T & { [P in K]: V }>
+  get(): T
 }
 
 /* _____________ Test Cases _____________ */
