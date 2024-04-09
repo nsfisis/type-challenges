@@ -23,7 +23,9 @@
 
 /* _____________ Your Code Here _____________ */
 
-declare function PromiseAll(values: any): any
+type PromisePresult<T> = T extends Promise<infer R> ? R : T;
+
+declare function PromiseAll<T extends any[]>(values: [...T]): Promise<{ -readonly [P in keyof T]: PromisePresult<T[P]> }>
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
