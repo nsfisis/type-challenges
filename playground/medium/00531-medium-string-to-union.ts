@@ -19,7 +19,7 @@
 
 /* _____________ Your Code Here _____________ */
 
-type StringToUnion<T extends string> = any
+type StringToUnion<T extends string> = T extends '' ? never : T extends `${infer Head}${infer Tail}` ? Head | StringToUnion<Tail> : never
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
