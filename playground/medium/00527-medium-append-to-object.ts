@@ -19,7 +19,7 @@
 
 /* _____________ Your Code Here _____________ */
 
-type AppendToObject<T, U, V> = any
+type AppendToObject<T, U extends keyof any, V> = T & { [P in U]: V }
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
