@@ -6,6 +6,10 @@ count:
 commit:
 	@bash commit.sh
 
-.PHONY: icommit
-icommit:
+.PHONY: wip
+wip:
 	@bash commit.sh ' (incomplete)'
+
+.PHONY: skip
+skip:
+	@bash commit.sh ' (skipped)'
