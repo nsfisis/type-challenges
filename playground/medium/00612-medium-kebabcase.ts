@@ -24,7 +24,9 @@
 
 /* _____________ Your Code Here _____________ */
 
-type KebabCase<S> = any
+type ToKebab<S extends string> = S extends Uppercase<S> ? (S extends Lowercase<S> ? S : `-${Lowercase<S>}`) : S
+type KebabCaseRec<S> = S extends `${infer Head}${infer Tail}` ? `${ToKebab<Head>}${KebabCaseRec<Tail>}` : ''
+type KebabCase<S> = S extends `${infer Head}${infer Tail}` ? `${Lowercase<Head>}${KebabCaseRec<Tail>}` : ''
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
