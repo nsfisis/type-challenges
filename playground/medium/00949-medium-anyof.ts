@@ -19,7 +19,13 @@
 
 /* _____________ Your Code Here _____________ */
 
-type AnyOf<T extends readonly any[]> = any
+type IsFalsy<T> =
+    T extends 0 | '' | false | null | undefined | [] ? true
+  : T extends {} ? ({} extends T ? true : false)
+  : false
+type IsTruthy<T> = IsFalsy<T> extends true ? false : true
+type AnyOf_<T extends readonly any[]> = { [P in keyof T]: IsTruthy<T[P]> }[number] extends false ? false : true
+type AnyOf<T extends readonly any[]> = T extends [] ? false : AnyOf_<T>
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
