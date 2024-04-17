@@ -20,7 +20,10 @@
 
 /* _____________ Your Code Here _____________ */
 
-type IsUnion<T> = any
+type ExpandUnion<T> = T extends any ? T[] : undefined
+type IsUnion<T> =
+  T[] extends never[] ? false
+  : ExpandUnion<T> extends T[] ? (T[] extends ExpandUnion<T> ? false : true) : true
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
