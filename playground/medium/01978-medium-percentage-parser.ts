@@ -32,7 +32,7 @@
 
 /* _____________ Your Code Here _____________ */
 
-type PercentageParser<A extends string> = any
+type PercentageParser<S extends string> = S extends `${infer A extends '+' | '-' | ''}${infer B extends number}${infer C extends '%' | ''}` ? [A, `${B}`, C] : undefined
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
