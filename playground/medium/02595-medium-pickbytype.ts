@@ -23,7 +23,8 @@
 
 /* _____________ Your Code Here _____________ */
 
-type PickByType<T, U> = any
+type PickByTypeHelper<T, U> = { [P in keyof T]: T[P] extends U ? undefined : P }
+type PickByType<T, U> = { [P in Exclude<keyof T, PickByTypeHelper<T, U>[keyof PickByTypeHelper<T, U>]>]: T[P] }
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
