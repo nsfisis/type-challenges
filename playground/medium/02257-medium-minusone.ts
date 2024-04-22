@@ -19,7 +19,19 @@
 
 /* _____________ Your Code Here _____________ */
 
-type MinusOne<T extends number> = any
+type MinusOneHelper<T extends number> =
+    T extends 1 ? 0
+  : T extends 2 ? 1
+  : T extends 3 ? 2
+  : T extends 4 ? 3
+  : T extends 5 ? 4
+  : T extends 6 ? 5
+  : T extends 7 ? 6
+  : T extends 8 ? 7
+  : T extends 9 ? 8
+  : 9
+
+type MinusOne<T extends number> = MinusOneHelper<T>
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
