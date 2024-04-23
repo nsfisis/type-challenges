@@ -26,7 +26,7 @@
 
 /* _____________ Your Code Here _____________ */
 
-type PartialByKeys<T, K> = any
+type PartialByKeys<T, K extends keyof T> = { [P in Exclude<keyof T, K>]: T[P] } & Partial<{ [P in K]: T[P] }>
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
