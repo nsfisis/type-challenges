@@ -23,7 +23,8 @@
 
 /* _____________ Your Code Here _____________ */
 
-type OmitByType<T, U> = any
+type OmitByTypeHelper<T, U> = { [P in keyof T]: T[P] extends U ? P : never }
+type OmitByType<T, U> = Omit<T, OmitByTypeHelper<T, U>[keyof OmitByTypeHelper<T, U>]>
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
