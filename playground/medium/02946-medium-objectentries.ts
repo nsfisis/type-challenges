@@ -23,7 +23,8 @@
 
 /* _____________ Your Code Here _____________ */
 
-type ObjectEntries<T> = any
+type ObjectEntriesHelper<T, K> = K extends keyof T ? [K, T[K]] : never
+type ObjectEntries<T> = ObjectEntriesHelper<T, keyof T>
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
