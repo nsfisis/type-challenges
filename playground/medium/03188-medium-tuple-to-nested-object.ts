@@ -18,7 +18,10 @@
 
 /* _____________ Your Code Here _____________ */
 
-type TupleToNestedObject<T, U> = any
+type TupleToNestedObject<T, U> =
+  T extends [infer Head extends keyof any, ...infer Tail]
+    ? { [P in Head]: TupleToNestedObject<[...Tail], U> }
+    : U
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
