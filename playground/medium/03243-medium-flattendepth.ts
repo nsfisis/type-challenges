@@ -21,7 +21,15 @@
 
 /* _____________ Your Code Here _____________ */
 
-type FlattenDepth = any
+type Flatten<T> =
+  T extends any[]
+    ? (T extends [[infer X, ...infer XS], ...infer Rest] ? [X, ...XS, ...Flatten<Rest>]
+         : T extends [infer X, ...infer Rest] ? [X, ...Flatten<Flatten<Rest>>]
+         : T)
+    : T
+type FlattenDepth<T, _D = 1> = Flatten<T>
+
+type A = Flatten<[1, [2, [3]]]>
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
