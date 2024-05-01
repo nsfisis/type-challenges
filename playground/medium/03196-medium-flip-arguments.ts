@@ -21,7 +21,9 @@
 
 /* _____________ Your Code Here _____________ */
 
-type FlipArguments<T> = any
+type FlipTuple<T> = T extends [infer Head, ...infer Tail] ? [...FlipTuple<Tail>, Head] : []
+type FlipArguments<T extends (...args: any[]) => any> =
+  T extends (...args: infer Args) => infer Result ? (...args: FlipTuple<Args>) => Result : undefined
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
