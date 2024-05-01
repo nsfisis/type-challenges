@@ -16,7 +16,14 @@
 
 /* _____________ Your Code Here _____________ */
 
-type BEM<B extends string, E extends string[], M extends string[]> = any
+type BEMHelperForEachM<B extends string, E extends string, M extends string> =
+  M extends any
+    ? (E extends ''
+      ? (M extends '' ? `${B}` : `${B}--${M}`)
+      : (M extends '' ? `${B}__${E}` : `${B}__${E}--${M}`))
+    : undefined
+type BEMHelperForEachE<B extends string, E extends string, M extends string[]> = E extends any ? BEMHelperForEachM<B, E, M[number] extends never ? '' : M[number]> : undefined
+type BEM<B extends string, E extends string[], M extends string[]> = BEMHelperForEachE<B, E[number] extends never ? '' : E[number], M>
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
