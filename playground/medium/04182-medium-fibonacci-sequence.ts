@@ -21,7 +21,23 @@
 
 /* _____________ Your Code Here _____________ */
 
-type Fibonacci<T extends number> = any
+type TupleNumber = 0[]
+type TupleNumberZero = []
+type TupleNumberOne = [0]
+type TupleNumberTwo = [0, 0]
+type TupleNumberSucc<N extends TupleNumber> = [0, ...N]
+type TupleNumberAdd<N extends TupleNumber, M extends TupleNumber> = [...N, ...M]
+type TupleNumberSub<N extends TupleNumber, M extends TupleNumber> = N extends [...M, ...infer Diff] ? Diff : TupleNumberZero
+type TupleNumberToNumber<N extends TupleNumber> = N['length']
+type TupleNumberFromNumberHelper<N extends number, T extends TupleNumber> = N extends TupleNumberToNumber<T> ? T : TupleNumberFromNumberHelper<N, TupleNumberSucc<T>>
+type TupleNumberFromNumber<N extends number> = TupleNumberFromNumberHelper<N, TupleNumberZero>
+
+type TupleNumberFibonacci<N extends TupleNumber> =
+    N extends TupleNumberOne ? TupleNumberOne
+  : N extends TupleNumberTwo ? TupleNumberOne
+  : TupleNumberAdd<TupleNumberFibonacci<TupleNumberSub<N, TupleNumberOne>>, TupleNumberFibonacci<TupleNumberSub<N, TupleNumberTwo>>>
+
+type Fibonacci<T extends number> = TupleNumberToNumber<TupleNumberFibonacci<TupleNumberFromNumber<T>>>
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
