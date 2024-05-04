@@ -20,7 +20,12 @@
 
 /* _____________ Your Code Here _____________ */
 
-type Flip<T> = any
+type ToKey<T extends boolean | keyof any> = T extends true ? 'true' : T extends false ? 'false' : T
+type FlipHelper1<T> = { [P in keyof T]: T[P] extends boolean | keyof any ? [P, ToKey<T[P]>] : undefined }
+type FlipHelper2<T> = FlipHelper1<T>[keyof FlipHelper1<T>]
+type PickSecond<T> = T extends [any, infer Second extends boolean | keyof any] ? ToKey<Second> : never
+type PickBySecond<T, K extends boolean | keyof any> = T extends [infer First, ToKey<K>] ? First : never
+type Flip<T> = { [P in PickSecond<FlipHelper2<T>>]: PickBySecond<FlipHelper2<T>, P> }
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect, NotEqual } from '@type-challenges/utils'
