@@ -19,7 +19,7 @@
 
 /* _____________ Your Code Here _____________ */
 
-type AllCombinations<S> = any
+type AllCombinations<S> = TODO
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
