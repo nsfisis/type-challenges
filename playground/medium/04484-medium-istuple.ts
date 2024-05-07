@@ -20,7 +20,11 @@
 
 /* _____________ Your Code Here _____________ */
 
-type IsTuple<T> = any
+type IsTuple<T> =
+    T[] extends never[] ? false
+  : T extends [] ? true
+  : T extends ReadonlyArray<any> ? true
+  : false
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
