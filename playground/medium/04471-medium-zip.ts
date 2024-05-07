@@ -15,7 +15,7 @@
 
 /* _____________ Your Code Here _____________ */
 
-type Zip<T, U> = any
+type Zip<T, U> = T extends [infer THead, ...infer TTail] ? (U extends [infer UHead, ...infer UTail] ? [[THead, UHead], ...Zip<TTail, UTail>] : []) : []
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
