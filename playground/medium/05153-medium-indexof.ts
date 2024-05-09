@@ -18,7 +18,17 @@
 
 /* _____________ Your Code Here _____________ */
 
-type IndexOf<T, U> = any
+type Nat = 0[]
+type NatZero = []
+type NatSucc<N extends Nat> = [0, ...N]
+type NumberToNatHelper<T extends number, N extends Nat> = T extends NatToNumber<N> ? N : NumberToNatHelper<T, NatSucc<N>>
+type NatToNumber<N extends Nat> = N['length']
+type NumberToNat<T extends number> = NumberToNatHelper<T, NatZero>
+
+type NatToNumberWithDefault<N extends Nat | undefined, D extends number> = N extends Nat ? NatToNumber<N> : D
+type IndexOfHelper<T, U, Idx extends Nat> = T extends [infer Head, ...infer Tail] ? (Head extends U ? Idx : IndexOfHelper<Tail, U, NatSucc<Idx>>) : undefined
+
+type IndexOf<T, U> = NatToNumberWithDefault<IndexOfHelper<T, U, NatZero>, -1>
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
