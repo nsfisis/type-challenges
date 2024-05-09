@@ -18,7 +18,11 @@
 
 /* _____________ Your Code Here _____________ */
 
-type Trunc = any
+type TruncHelper<T> =
+    T extends `.${string}` ? '0'
+  : T extends `${infer IntegerPart}.${string}` ? IntegerPart
+  : T
+type Trunc<T extends number | string> = T extends string ? TruncHelper<T> : TruncHelper<`${T}`>
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
