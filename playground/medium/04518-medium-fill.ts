@@ -19,12 +19,32 @@
 
 /* _____________ Your Code Here _____________ */
 
+type Nat = 0[]
+type NatZero = []
+type NatSucc<N extends Nat> = [0, ...N]
+type NumberToNatHelper<T extends number, N extends Nat> = T extends NatToNumber<N> ? N : NumberToNatHelper<T, NatSucc<N>>
+type NatToNumber<N extends Nat> = N['length']
+type NumberToNat<T extends number> = NumberToNatHelper<T, NatZero>
+
+type NatGe<N extends Nat, M extends Nat> = N extends [...M, ...any[]] ? true : false
+type NatEq<N extends Nat, M extends Nat> = N extends M ? true : false
+type NatGt<N extends Nat, M extends Nat> = NatEq<N, M> extends true ? false : NatGe<N, M>
+type LogicalAnd<T extends boolean, U extends boolean> = T extends true ? (U extends true ? true : false) : false
+
+type FillHelper<
+  T extends unknown[],
+  N,
+  Start extends Nat,
+  End extends Nat,
+  Idx extends Nat,
+> = T extends [infer Head, ...infer Tail] ? [(LogicalAnd<NatGe<Idx, Start>, NatGt<End, Idx>> extends true ? N : Head), ...FillHelper<Tail, N, Start, End, NatSucc<Idx>>] : []
+
 type Fill<
   T extends unknown[],
   N,
   Start extends number = 0,
   End extends number = T['length'],
-> = any
+> = FillHelper<T, N, NumberToNat<Start>, NumberToNat<End>, NatZero>
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
