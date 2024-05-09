@@ -18,7 +18,8 @@
 
 /* _____________ Your Code Here _____________ */
 
-type Without<T, U> = any
+type WithoutHelper<T, U> = T extends [infer Head, ...infer Tail] ? (Head extends U ? [...WithoutHelper<Tail, U>] : [Head, ...WithoutHelper<Tail, U>]) : []
+type Without<T, U> = U extends any[] ? WithoutHelper<T, U[number]> : WithoutHelper<T, U>
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
