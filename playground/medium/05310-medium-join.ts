@@ -19,7 +19,8 @@
 
 /* _____________ Your Code Here _____________ */
 
-type Join<T, U> = any
+type JoinHelper<T extends string[], U extends string | number> = T extends [infer Head extends string, ...infer Tail extends string[]] ? `${Head}${U}${JoinHelper<Tail, U>}` : ''
+type Join<T extends string[], U extends string | number> = JoinHelper<T, U> extends `${infer Result}${U}` ? Result : ''
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
