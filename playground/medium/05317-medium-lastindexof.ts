@@ -19,7 +19,16 @@
 
 /* _____________ Your Code Here _____________ */
 
-type LastIndexOf<T, U> = any
+type Nat = 0[]
+type NatZero = []
+type NatPred<N extends Nat> = N extends [0, ...infer Result] ? Result : NatZero
+type NatToNumber<N extends Nat> = N['length']
+type LengthOfNat<T extends any> = { [P in keyof T]: 0 }
+
+type NatToNumberWithDefault<N extends Nat | undefined, D extends number> = N extends Nat ? NatToNumber<N> : D
+type LastIndexOfHelper<T, U, Idx extends Nat> = T extends [...infer Head, infer Tail] ? (Tail extends U ? Idx : LastIndexOfHelper<Head, U, NatPred<Idx>>) : undefined
+
+type LastIndexOf<T, U> = NatToNumberWithDefault<LastIndexOfHelper<T, U, NatPred<LengthOfNat<T>>>, -1>
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
