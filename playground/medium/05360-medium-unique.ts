@@ -20,7 +20,8 @@
 
 /* _____________ Your Code Here _____________ */
 
-type Unique<T> = any
+type UniqueHelper<T, Acc extends unknown[]> = T extends [infer Head, ...infer Tail] ? (Head extends Acc[number] ? [...UniqueHelper<Tail, Acc>] : [Head, ...UniqueHelper<Tail, [Head, ...Acc]>]) : []
+type Unique<T> = UniqueHelper<T, []>
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
