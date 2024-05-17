@@ -18,7 +18,13 @@
 
 /* _____________ Your Code Here _____________ */
 
-type ConstructTuple<L extends number> = any
+type Nat = unknown[]
+type NatZero = []
+type NatSucc<N extends Nat> = [unknown, ...N]
+type NumberToNatHelper<T extends number, N extends Nat> = T extends NatToNumber<N> ? N : NumberToNatHelper<T, NatSucc<N>>
+type NatToNumber<N extends Nat> = N['length']
+type NumberToNat<T extends number> = NumberToNatHelper<T, NatZero>
+type ConstructTuple<L extends number> = NumberToNat<L>
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
