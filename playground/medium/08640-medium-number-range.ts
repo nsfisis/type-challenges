@@ -16,7 +16,17 @@
 
 /* _____________ Your Code Here _____________ */
 
-type NumberRange<L, H> = any
+type Nat = 0[]
+type NatZero = []
+type NatSucc<N extends Nat> = [0, ...N]
+type NumberToNatHelper<T extends number, N extends Nat> = T extends NatToNumber<N> ? N : NumberToNatHelper<T, NatSucc<N>>
+type NatToNumber<N extends Nat> = N['length']
+type NumberToNat<T extends number> = NumberToNatHelper<T, NatZero>
+type NatEq<N extends Nat, M extends Nat> = NatToNumber<N> extends NatToNumber<M> ? true : false
+
+type NumberRangeHelper2<L extends Nat, H extends Nat> = NatEq<L, H> extends true ? H : L | NumberRangeHelper2<NatSucc<L>, H>
+type NumberRangeHelper1<T> = T extends Nat ? NatToNumber<T> : undefined
+type NumberRange<L extends number, H extends number> = NumberRangeHelper1<NumberRangeHelper2<NumberToNat<L>, NumberToNat<H>>>
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
