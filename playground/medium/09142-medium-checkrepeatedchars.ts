@@ -19,7 +19,8 @@
 
 /* _____________ Your Code Here _____________ */
 
-type CheckRepeatedChars<T extends string> = any
+type CheckRepeatedCharsHelper<T extends string, U extends string> = T extends `${infer Head}${infer Tail}` ? (Head extends U ? true : CheckRepeatedCharsHelper<Tail, Head | U>) : false
+type CheckRepeatedChars<T extends string> = CheckRepeatedCharsHelper<T, never>
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
