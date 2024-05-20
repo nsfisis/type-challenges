@@ -12,7 +12,18 @@
 
 /* _____________ Your Code Here _____________ */
 
-type FirstUniqueCharIndex<T extends string> = any
+type Nat = 0[]
+type NatZero = []
+type NatSucc<N extends Nat> = [0, ...N]
+type NatToNum<N extends Nat> = N['length']
+
+type DuplicateCharsHelper<T extends string, U extends string> = T extends `${infer Head}${infer Tail}` ? (Head extends U ? (Head | DuplicateCharsHelper<Tail, Head | U>) : (DuplicateCharsHelper<Tail, Head | U>)) : never
+type DuplicateChars<T extends string> = DuplicateCharsHelper<T, never>
+type FirstUniqueCharIndexHelper<Idx extends Nat, T extends string, D extends string> =
+  T extends `${infer Head}${infer Tail}`
+    ? (Head extends D ? FirstUniqueCharIndexHelper<NatSucc<Idx>, Tail, D> : NatToNum<Idx>)
+    : -1
+type FirstUniqueCharIndex<T extends string> = FirstUniqueCharIndexHelper<NatZero, T, DuplicateChars<T>>
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
