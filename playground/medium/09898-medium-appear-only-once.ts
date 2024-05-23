@@ -12,7 +12,10 @@
 
 /* _____________ Your Code Here _____________ */
 
-type FindEles<T extends any[]> = any
+type DuplicateCharsHelper<T extends any[], U> = T extends [infer Head, ...infer Tail] ? (Head extends U ? (Head | DuplicateCharsHelper<Tail, Head | U>) : (DuplicateCharsHelper<Tail, Head | U>)) : never
+type DuplicateChars<T extends any[]> = DuplicateCharsHelper<T, never>
+type FindElesHelper<T extends any[], U> = T extends [infer Head, ...infer Tail] ? (Head extends U ? FindElesHelper<Tail, U> : [Head, ...FindElesHelper<Tail, U>]) : []
+type FindEles<T extends any[]> = FindElesHelper<T, DuplicateChars<T>>
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
