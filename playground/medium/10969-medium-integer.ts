@@ -12,7 +12,7 @@
 
 /* _____________ Your Code Here _____________ */
 
-type Integer<T> = any
+type Integer<T> = T extends number ? T : never
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
