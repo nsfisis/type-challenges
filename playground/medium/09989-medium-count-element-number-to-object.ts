@@ -33,7 +33,21 @@
 
 /* _____________ Your Code Here _____________ */
 
-type CountElementNumberToObject<T> = any
+type Nat = 0[]
+type NatZero = []
+type NatSucc<N extends Nat> = [0, ...N]
+type NatToNum<N extends Nat> = N['length']
+
+type Flatten<T extends any> = T extends [infer Head, ...infer Tail] ? (Head extends any[] ? [...Flatten<Head>, ...Flatten<Tail>] : [Head, ...Flatten<Tail>]) : []
+
+type CountElementNumberToObjectHelper1<T extends any[], Acc extends { [K: keyof any]: Nat }> =
+  T extends [infer Head, ...infer Tail]
+    ? CountElementNumberToObjectHelper1<Tail, { [P in keyof Acc]: Head extends P ? NatSucc<Acc[P]> : Acc[P] }>
+    : Acc
+type CountElementNumberToObjectHelper2<T extends any[]> = CountElementNumberToObjectHelper1<T, { [P in T[number]]: NatZero }>
+type CountElementNumberToObjectHelper3<Acc extends { [K: keyof any]: Nat }> = { [P in keyof Acc]: NatToNum<Acc[P]> }
+type CountElementNumberToObjectHelper4<T extends any[]> = CountElementNumberToObjectHelper3<CountElementNumberToObjectHelper2<Flatten<T>>>
+type CountElementNumberToObject<T extends any[]> = T[] extends [never][] ? {} : CountElementNumberToObjectHelper4<T>
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
