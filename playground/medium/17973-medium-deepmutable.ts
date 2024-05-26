@@ -54,7 +54,7 @@
 
 /* _____________ Your Code Here _____________ */
 
-type DeepMutable = any
+type DeepMutable<T> = { -readonly [P in keyof T]: T[P] }
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
