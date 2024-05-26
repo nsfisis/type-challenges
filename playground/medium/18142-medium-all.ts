@@ -22,7 +22,7 @@
 
 /* _____________ Your Code Here _____________ */
 
-type All = any
+type All<Haystack, Needle> = Haystack extends [infer Head, ...infer Tail] ? (Head[] extends Needle[] ? All<Tail, Needle> : false) : true
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
