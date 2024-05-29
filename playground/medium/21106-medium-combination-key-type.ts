@@ -13,8 +13,8 @@
 
 /* _____________ Your Code Here _____________ */
 
-// 实现 Combs
-type Combs<T extends any[]> = any
+type CombsHelper<T extends string, U extends string[]> = U extends [infer Head extends string, ...infer Tail extends string[]] ? `${T} ${Head}` | CombsHelper<T, Tail> : never
+type Combs<T extends string[]> = T extends [infer Head extends string, ...infer Tail extends string[]] ? CombsHelper<Head, Tail> | Combs<Tail> : never
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
