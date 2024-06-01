@@ -16,7 +16,8 @@
 
 /* _____________ Your Code Here _____________ */
 
-type CartesianProduct<T, U> = any
+type CartesianProductHelper<T, U> = U extends any ? [T, U] : []
+type CartesianProduct<T, U> = T extends any ? CartesianProductHelper<T, U> : []
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
