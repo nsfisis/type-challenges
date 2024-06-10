@@ -22,7 +22,8 @@
 
 /* _____________ Your Code Here _____________ */
 
-type MergeAll<XS> = any
+type MergeTwo<T, U> = { [P in keyof T | keyof U]: P extends keyof T ? (P extends keyof U ? T[P] | U[P] : T[P]) : (P extends keyof U ? U[P] : undefined) }
+type MergeAll<XS> = XS extends [infer Head, ...infer Tail] ? MergeTwo<Head, MergeAll<Tail>> : {}
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
