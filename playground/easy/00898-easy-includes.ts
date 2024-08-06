@@ -18,13 +18,14 @@
 
 /* _____________ Your Code Here _____________ */
 
-type Eq<T, U> =
-  T[] extends U[] ? (U[] extends T[] ? true : undefined) : undefined
-type Includes<T extends readonly any[], U> =
-  ({ [P in keyof T]: Eq<T[P], U> }[number]) extends undefined ? false : true
-
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
+
+type Includes<T extends readonly any[], U> =
+  T extends [infer Head, ...infer Tail] ? (Eq<Head, U> extends true ? true : Includes<Tail, U>) : false
+// type Eq<T, U> =
+//   T[] extends U[] ? (U[] extends T[] ? true : undefined) : undefined
+type Eq<T, U> = Equal<T, U>;
 
 type cases = [
   Expect<Equal<Includes<['Kars', 'Esidisi', 'Wamuu', 'Santana'], 'Kars'>, true>>,
