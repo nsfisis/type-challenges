@@ -13,3 +13,7 @@ wip:
 .PHONY: skip
 skip:
 	@bash commit.sh ' (skipped)'
+
+.PHONY: generate
+generate:
+	@pnpm generate --keep-changes
